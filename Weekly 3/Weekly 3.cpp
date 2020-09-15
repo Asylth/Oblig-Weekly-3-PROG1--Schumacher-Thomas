@@ -3,29 +3,57 @@
 #include <ctime>
 
 void rightwrong();
-void continuegame();
-//int counter();
+void postgame();
 
-int toguess;
-int guess;
-char yesno;
-bool contrw = true;
-bool run = true;
-int globalcounter = 1;
-int hscore = 100;
-int yscore;
+
+int difficulity;		//desides difficulity
+int toguess;			//the number to guess
+int guess;				//user guess input
+char yesno;				//continue game after playing
+char changediff;		//keep playing current difficulity or switch
+bool contrw = true;		//continue the right/wrong function
+bool run = true;		//controls the main function
+int globalcounter;		//tracks the score of player (number of guesses)
+int hscore = 100;		//default high score
+int yscore = 0;			//player score
+
 
 //make a guess a number game
 int main()
 {
 	while (run == true){
 
-		std::srand(std::time(NULL));
-		toguess = rand() % 10 + 1;
+		std::cout << "Select a difficulity \n";
+		std::cout << "1. Easy (1-5) \n";
+		std::cout << "2. Normal (1-10) \n";
+		std::cout << "3. Hard (1-30) \n";
+		std::cout << "Difficulity: ";
+		std::cin >> difficulity;
 
-		rightwrong();
-
-	};
+			switch (difficulity) {
+			case 1:
+				std::srand(std::time(NULL));
+				toguess = rand() % 5 + 1;
+				contrw = true;
+				rightwrong();
+				break;
+			case 2:
+				std::srand(std::time(NULL));
+				toguess = rand() % 10 + 1;
+				contrw = true;
+				rightwrong();
+				break;
+			case 3:
+				std::srand(std::time(NULL));
+				toguess = rand() % 30 + 1;
+				contrw = true;
+				rightwrong();
+				break;
+			default:
+				std::cout << "Enter a valid difficulity \n";
+				break;
+			}
+	}
 
 }
 
@@ -33,13 +61,14 @@ void rightwrong() {
 
 	do {
 
-		std::cout << "Try to guess my number: ";
+		std::cout << "Try to guess my number: \n";
 		std::cin >> guess;
+		globalcounter++;
 
 		if (guess == toguess) {
 			std::cout << std::endl << "You guessed the right number! \n";
 			contrw = false;
-			continuegame();
+			postgame();
 		}
 		else if (guess < toguess) {
 			std::cout << std::endl << "Your guess is to low \n";
@@ -53,32 +82,31 @@ void rightwrong() {
 			std::cout << std::endl << "Enter a valid guess \n";
 		}
 
-		globalcounter++;
-
 	} while (contrw == true);
 }
 
-void continuegame() {
+void postgame() {
 	
-	globalcounter = yscore;
+	yscore = globalcounter;
 
 	if (yscore < hscore) {
-		std::cout << "Your score " << yscore << " is lower than the highscore " << hscore << std::endl;
-		yscore = hscore;
+		std::cout << "Your score " << yscore;
+		hscore = yscore;
+		std::cout << " is lower than the previous bestscore " << hscore << std::endl;
 	}
 	else if (yscore > hscore) {
-		std::cout << "Your score " << yscore << " is higher than the highscore " << hscore << std::endl;
+		std::cout << "Your score " << yscore << " is higher than the bestscore " << hscore << std::endl;
 	}
 	else if (yscore == hscore) {
-		std::cout << "Your score " << yscore << " is equal to the highscore" << std::endl;
+		std::cout << "Your score " << yscore << " is equal to the bestscore" << std::endl;
 	}
 
-	std::cout << "Highscore: " << hscore << std::endl;
-	std::cout << "Your score: " << globalcounter << std::endl;
 	
+		std::cout << "Highscore: " << hscore << std::endl;
+		std::cout << "Your score: " << yscore << std::endl;
 
 	globalcounter = 0;
-	std::cout << "\n Do you want to continue the game (Y/N): ";
+	std::cout << "\n Do you want to continue the game (Y/N): "; //add option to continue playing current diff or change it (and del scores)
 	std::cin >> yesno;
 	switch (yesno) {
 	case 'Y':case 'y':
@@ -88,4 +116,16 @@ void continuegame() {
 		run = false;
 		break;
 	}
+	std::cout << "Do you want to keep playing with the same difficulity (Y) or switch (N)? \n";
+	std::cout << "A switch will result in your scores being deleted. \n";
+
+	/*switch (changediff) {
+		case 'Y':case 'y':
+			;
+			break;
+		case 'N':case 'n':
+			run = true;
+			break;
+		}*/
+	
 }
