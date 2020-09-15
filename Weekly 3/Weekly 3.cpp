@@ -10,7 +10,7 @@ int difficulity;		//desides difficulity
 int toguess;			//the number to guess
 int guess;				//user guess input
 char yesno;				//continue game after playing
-char changediff;		//keep playing current difficulity or switch
+//char changediff;		//keep playing current difficulity or switch. not currently implemented
 bool contrw = true;		//continue the right/wrong function
 bool run = true;		//controls the main function
 int globalcounter;		//tracks the score of player (number of guesses)
@@ -21,6 +21,7 @@ int yscore = 0;			//player score
 //make a guess a number game
 int main()
 {
+	//main menu with difficulity select.
 	while (run == true){
 
 		std::cout << "Select a difficulity \n";
@@ -57,6 +58,7 @@ int main()
 
 }
 
+//checks if the guess of user is higher, lower or equal to the random number
 void rightwrong() {
 
 	do {
@@ -78,13 +80,15 @@ void rightwrong() {
 			std::cout << std::endl << "Your guess is to high \n";
 
 		}
-		else { //does not work for now
-			std::cout << std::endl << "Enter a valid guess \n";
-		}
+		//else { //does not work for now, may add this later
+		//	std::cout << std::endl << "Enter a valid guess \n";
+		//}
 
 	} while (contrw == true);
 }
 
+//post game screen where user sees their score and the current high score
+//also promts user if they want to play again
 void postgame() {
 	
 	yscore = globalcounter;
@@ -119,7 +123,7 @@ void postgame() {
 	std::cout << "Do you want to keep playing with the same difficulity (Y) or switch (N)? \n";
 	std::cout << "A switch will result in your scores being deleted. \n";
 
-	/*switch (changediff) {
+	/*switch (changediff) { //may add difficulity dependent scores and highscors later
 		case 'Y':case 'y':
 			;
 			break;
