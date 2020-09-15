@@ -4,15 +4,16 @@
 
 void rightwrong();
 void continuegame();
+//int counter();
 
 int toguess;
 int guess;
 char yesno;
 bool contrw = true;
 bool run = true;
-int globalcounter;
-
-
+int globalcounter = 1;
+int hscore = 100;
+int yscore;
 
 //make a guess a number game
 int main()
@@ -31,9 +32,6 @@ int main()
 void rightwrong() {
 
 	do {
-		for (globalcounter = 0; globalcounter++;) {
-			
-		}
 
 		std::cout << "Try to guess my number: ";
 		std::cin >> guess;
@@ -51,18 +49,37 @@ void rightwrong() {
 			std::cout << std::endl << "Your guess is to high \n";
 
 		}
-		else {//go again
+		else { //does not work for now
 			std::cout << std::endl << "Enter a valid guess \n";
 		}
+
+		globalcounter++;
 
 	} while (contrw == true);
 }
 
 void continuegame() {
+	
+	globalcounter = yscore;
 
+	if (yscore < hscore) {
+		std::cout << "Your score " << yscore << " is lower than the highscore " << hscore << std::endl;
+		yscore = hscore;
+	}
+	else if (yscore > hscore) {
+		std::cout << "Your score " << yscore << " is higher than the highscore " << hscore << std::endl;
+	}
+	else if (yscore == hscore) {
+		std::cout << "Your score " << yscore << " is equal to the highscore" << std::endl;
+	}
+
+	std::cout << "Highscore: " << hscore << std::endl;
+	std::cout << "Your score: " << globalcounter << std::endl;
+	
+
+	globalcounter = 0;
 	std::cout << "\n Do you want to continue the game (Y/N): ";
 	std::cin >> yesno;
-
 	switch (yesno) {
 	case 'Y':case 'y':
 		run = true;
